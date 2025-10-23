@@ -231,7 +231,28 @@ License: MIT
 					</div>
 				</tr>
 			</table>	
-			<hr>				
+			<hr>
+			<table cellpadding="3" cellspacing="3" border="0">
+          <tr>
+            <!-- Scale -->
+            <div id="scaleTable">
+              <td valign="top">
+                <table cellpadding="3" cellspacing="3" border="0">
+                  <tr>
+                    <td valign="top">
+                      <label for="scale">Scale:</label>
+                    </td>
+                    <td>
+                      <input type="number" id="scale" value="1.5" step="0.1" />
+                    </td>
+                    <td><button onclick="scaleNodes(document.getElementById('scale').value)">Scale</button></td>
+                  </tr>
+                </table>
+              </td>
+            </div>
+          </tr>
+        </table>
+        <hr>
 			<table cellpadding="3" cellspacing="3" border="0">
 				<tr>
 					<td valign="top">
@@ -4250,6 +4271,22 @@ const allDataSets = {
 	  draw();
 	}
 
+	function scaleNodes(factor) {
+      const f = parseFloat(factor);
+      if (!isFinite(f)) return;
+
+      // Scale around the canvas center to simulate zoom-in/out
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+
+      nodes.forEach(n => {
+        n.x = cx + (n.x - cx) * f;
+        n.y = cy + (n.y - cy) * f;
+      });
+
+      draw();
+    }
+
 	// rkadded node dragging
 	let draggingNode = null;
 
@@ -4293,3 +4330,4 @@ const allDataSets = {
   
 </body>
 </html>
+
